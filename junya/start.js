@@ -9,4 +9,7 @@ startScene.create = function () {
     this.input.keyboard.on('keydown', function(event) {
         this.scene.start('mainScene');
     }, this);
+    this.input.keyboard.on('keydown-return',function(event){
+        this.scene.start('setting');
+    })
 };

@@ -58,7 +58,7 @@ mainScene.update = function() {
 
 mainScene.config = function() {
     // 背景色の設定
-    this.cameras.main.setBackgroundColor('#cccccc');
+    this.cameras.main.setBackgroundColor('#ffd700');
     
     // パドルの移動速度
     this.paddleSpeed = 10;
