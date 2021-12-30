@@ -2,16 +2,21 @@ var mainScene = new Phaser.Scene("mainScene");
 
 mainScene.create = function() {
     // 初期設定を実行する
-    
+  this.config();  
     
     // ボール作成
-    
+    this.createBall();
     
     // パドル作成
-    
+    this.createPaddle();
     
     // スペースキーのクリックでボール発射
-    
+    this.input.keyboard.on('keydown-SPACE',function(event){
+        if(this.paddle.isStart){
+            this.ball.setVelocity(this.ballSpeedX,this.ballSpeedY);
+            this.paddle.isStart = false;
+        }
+    },this);
     
     // ブロック作成
     
@@ -27,7 +32,17 @@ mainScene.update = function() {
     // キーボードのカーソルオブジェクトを取得
     var cursors = this.input.keyboard.createCursorKeys();
     var x = 0;
-    
+    if(cursors.right.isDown){
+        x = this.paddle.x + this.paddleSpeed;
+        this.paddle.x = Phaser.Math.Clamp(x,52,748);
+    }
+    if(cursors.left.isDown){
+        x = this.paddle.x - this.paddleSpeed;
+        this.paddle.x = Phaser.Math.Clamp(x,52,748);
+    }
+    if(this.paddle.isStart){
+        this.ball.setPosition(this.paddle.x,500);
+    }
 };
 
 mainScene.config = function() {
@@ -47,12 +62,19 @@ mainScene.config = function() {
 
 mainScene.createBall = function() {
     // ボール作成
-    
+    this.ball = this.physics.add.image(400,500,'ball1');
+    this.ball.setDisplaySize(22,22);
+    this.ball.setCollideWorldBounds(true);
+    this.ball.setBounce(1);
 };
 
 mainScene.createPaddle = function() {
      // パドル作成
-    
+    this.paddle = this.physics.add.image(400,550,'paddle1');
+    this.paddle.setDisplaySize(104,24);
+    this.paddle.setImmovable();
+    this.paddle.isStart = true;
+    this.physics.add.collider(this.paddle,this.ball,this.hitpaddle,null,this);
 };
 
 mainScene.hitPaddle = function (paddle, ball) {
