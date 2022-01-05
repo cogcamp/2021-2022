@@ -57,7 +57,7 @@ mainScene.update = function() {
 
 mainScene.config= function(){
     // 背景色の設定
-    this.cameras.main.setBackgroundColor('#aaaaaa');
+    this.cameras.main.setBackgroundColor('red1');
     
     // パドルの移動速度
     this.paddleSpeed = 10;
@@ -72,7 +72,7 @@ mainScene.config= function(){
 
 mainScene.createBall = function() {
     // ボール作成
-    this.ball = this.physics.add.image(400, 500, 'ball1');
+    this.ball = this.physics.add.image(400, 500, 'ball2');
     this.ball.setDisplaySize(15,15);
     this.ball.setCollideWorldBounds(true);
     this.ball.setBounce(1);
@@ -80,7 +80,7 @@ mainScene.createBall = function() {
 
 mainScene.createPaddle = function() {
      // パドル作成
-    this.paddle = this.physics.add.image(400, 550, 'paddle1');
+    this.paddle = this.physics.add.image(400, 550, 'paddle2');
     this.paddle.setDisplaySize(80,24);
     this.paddle.setImmovable();
     this.paddle.isStart = true;
