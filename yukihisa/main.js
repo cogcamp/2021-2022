@@ -118,7 +118,7 @@ mainScene.createBlocks = function() {
     // 横10列、縦6行並べる
     //ブロックの色の配列
     var blockColors = [ 'red1', 'green1', 'yellow1', 'silver1', 'blue1' ,'purple1','silver2'];
-    var blockpoints = [30,50,60,70,40,]
+    var blockpoints = [10,20,30,40,50,100,200,]
     
     //物理エンジン対象固定オブジェクトグループ作成
     this.blocks = this.physics.add.staticGroup();
@@ -144,7 +144,10 @@ mainScene.createBlocks = function() {
                 continue;
             }
             var color = blockColors[map[i][j]-1];
+            var point = blockpoints[map[i][j]-1];
             var block = this.blocks.create(80 + j * 64, 80 + i * 32,color);
+            block.point = point
+            block.color = color
             block.setOrigin(0,0);
             block.setDisplaySize(32,32);
             block.refreshBody();
@@ -156,8 +159,10 @@ mainScene.createBlocks = function() {
 
 mainScene.hitBlock = function (ball, block) {
     // 衝突したブロックを削除
+    this.score += block.point
+    this.ballSpeedY += 10
+    ball.setVelocityY(-this.ballSpeedY)
     block.destroy();
-    this.score += 100
     this.scoreText.text = 'スコア　:' + this.score;
     // ブロックの残りを判定
     if (this.blocks.countActive() == 0) {
@@ -179,7 +184,7 @@ mainScene.gameClear = function() {
 };
 
 mainScene.failToHit =  function () {
-    // ボールを打ち返すことに失敗
+    // ボールを打ち返すことに失敗 
     this.ball.setVelocity(0);
     this.paddle.isStart = true;
     // ライフを減らす
